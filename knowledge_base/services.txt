@@ -1,0 +1,19 @@
+# TechNova Solutions — Products and Services
+
+TechNova Solutions offers four core service pillars:
+
+1. AI Automation & Autonomous Agents
+- Custom LLM agents, RAG enterprise search assistants, voice AI customer support/sales agents, and intelligent document processing (IDP).
+- Average client ROI: 45% to 65% reduction in manual operational workload within 90 days.
+- Tech stack: Gemini, LangChain, FAISS/Qdrant, FastAPI, Python, and telephony connectors.
+
+2. Cloud Services & DevOps Modernization
+- Multi-cloud architecture on AWS, Google Cloud Platform (GCP), and Microsoft Azure.
+- Zero-downtime cloud migration, Kubernetes (EKS/GKE) orchestration, CI/CD pipelines, FinOps cost optimization (typically 25%-35% cloud bill savings).
+
+3. Custom Software Development
+- Full-stack web and mobile platforms using React, Next.js, FastAPI, Node.js, PostgreSQL, and microservices architecture.
+- Enterprise API integrations with Salesforce, HubSpot, Zoho, SAP, and Stripe/Razorpay.
+
+4. Business Intelligence (BI) & Data Engineering
+- Modern data warehouses (Snowflake, BigQuery, DuckDB, PostgreSQL), ETL/ELT pipelines, predictive churn/demand forecasting, and interactive Power BI / Plotly / Looker executive dashboards.

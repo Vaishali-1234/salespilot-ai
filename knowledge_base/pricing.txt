@@ -1,0 +1,19 @@
+# TechNova Solutions — Pricing Plans
+
+All plans include a dedicated Technical Account Manager, weekly sprint demos, and transparent milestone billing.
+
+1. Starter Automation Package — $2,500 / month (₹2,10,000 / month)
+- Ideal for startups and small teams (10 to 50 employees).
+- Includes 1 production AI workflow or RAG chatbot, basic CRM webhook integration, and standard 8x5 support.
+- Onboarding timeline: 2 to 3 weeks.
+
+2. Growth Transformation Plan — $6,500 / month (₹5,45,000 / month)
+- Ideal for mid-market companies (50 to 500 employees).
+- Includes up to 3 autonomous AI agents or cloud/BI modules, custom API/ERP integrations, dedicated cloud optimization, and 16x6 priority SLA.
+- Onboarding timeline: 4 to 6 weeks.
+
+3. Enterprise Custom Suite — Starting at $15,000 / month (₹12,50,000 / month)
+- Designed for large enterprises requiring multi-region high availability, VPC/on-prem deployment, custom fine-tuned models, SOC 2 / HIPAA / DPDP compliance, and 24x7x365 dedicated SRE support.
+
+4. One-Time Discovery & Architecture Audit — $1,500 fixed fee (waived if the client signs a Growth or Enterprise contract within 30 days).
+- 14-day pilot PoC available for qualified Growth and Enterprise prospects.

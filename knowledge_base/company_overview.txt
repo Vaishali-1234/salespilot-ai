@@ -1,0 +1,13 @@
+# TechNova Solutions — Company Overview
+
+TechNova Solutions is an enterprise technology and digital transformation company founded in 2021 and headquartered in Bengaluru, India, with regional delivery offices in Pune and Singapore.
+
+## Mission
+To empower growing SMBs and mid-market enterprises with production-ready AI automation, resilient cloud infrastructure, custom software engineering, and real-time business intelligence.
+
+## Key Facts
+- Customers Served: 180+ B2B clients across FinTech, Healthcare, Retail, SaaS, and Logistics.
+- Engineering Team: 95+ certified AI engineers, cloud architects (AWS/GCP/Azure), and full-stack developers.
+- Delivery SLA: 99.9% uptime guarantee on managed cloud and AI platforms.
+- Security Certifications: ISO 27001 certified, GDPR & India DPDP Act 2023 compliant, SOC 2 Type II controls in place.
+- Typical Engagement Model: Fixed-scope sprints, dedicated pods, or annual managed SaaS retainers.

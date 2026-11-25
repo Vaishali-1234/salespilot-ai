@@ -1,0 +1,16 @@
+# TechNova Solutions — Frequently Asked Questions (FAQs)
+
+Q: How fast can TechNova launch an AI automation MVP?
+A: Most Starter and Growth AI automation MVPs go live in 2 to 4 weeks using our pre-built RAG, agentic orchestration, and cloud templates.
+
+Q: Does TechNova train public AI models on our confidential company data?
+A: Never. All enterprise and growth deployments use isolated tenant vector stores, encrypted storage (AES-256), TLS 1.3 in transit, and zero-data-retention API endpoints so your proprietary data is never used to train external models.
+
+Q: Can TechNova integrate with our existing CRM or ERP like HubSpot, Salesforce, or Zoho?
+A: Yes. We provide native connectors and custom REST/GraphQL webhooks for Salesforce, HubSpot, Zoho CRM, SAP, and PostgreSQL/SQL databases.
+
+Q: Do you offer a Proof of Concept (PoC) before a long-term commitment?
+A: Yes, we offer a 14-day structured pilot PoC for Growth and Enterprise prospects so teams can validate accuracy and ROI on their own sample data.
+
+Q: What happens if we need to scale from 1,000 users to 100,000 users?
+A: Our cloud architectures are built statelessly on Kubernetes with Redis caching, horizontal autoscaling, read-replicated PostgreSQL, and distributed vector indexes so platforms scale smoothly to 100,000+ users without re-architecting.

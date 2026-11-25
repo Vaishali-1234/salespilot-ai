@@ -1,0 +1,15 @@
+# TechNova Solutions — Customer Support & Sales Policies
+
+## Customer Support Policy
+- Response Time SLAs:
+  - Critical P1 Outage (Enterprise): < 15 minutes (24x7x365 hotline).
+  - High P2 Issue (Growth & Enterprise): < 2 hours.
+  - Standard P3 Inquiry (All Plans): < 1 business day.
+- Escalation Path: L1 Support Engineer -> L2 Cloud/AI Specialist -> Dedicated Technical Account Manager.
+- Refund & Cancellation Policy: Monthly retainers can be cancelled with 30 days written notice. Unused discovery audit fees are credited 100% toward Growth/Enterprise onboarding.
+
+## Sales & Consultation Policy
+- Discovery calls are 30-minute free technical consultations with a Solutions Architect.
+- Available Demo & Consultation Slots: Monday through Saturday, 10:00 AM, 11:30 AM, 02:00 PM, 03:30 PM, and 05:00 PM IST.
+- Discounts: Annual upfront billing qualifies for a 12% discount. Non-profits and educational institutions receive a 15% discount.
+- Contracting: Standard MSA + NDA + DPA (Data Processing Addendum) signed digitally before project kickoff.
