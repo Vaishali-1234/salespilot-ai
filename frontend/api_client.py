@@ -16,7 +16,12 @@ class BackendClient:
         url = f"{self.base_url}{path}"
         with httpx.Client(timeout=timeout) as client:
             resp = client.request(method, url, **kwargs)
-            resp.raise_for_status()
+            if resp.is_error:
+                try:
+                    detail = resp.json().get("detail")
+                except Exception:
+                    detail = resp.text
+                raise RuntimeError(detail or f"HTTP {resp.status_code} error")
             return resp.json()
 
     def health(self) -> Optional[Dict[str, Any]]:

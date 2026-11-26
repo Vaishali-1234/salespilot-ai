@@ -48,7 +48,12 @@ def _render_score_gauge(score: int, category: str) -> None:
             },
         )
     )
-    fig.update_layout(height=190, margin=dict(l=15, r=15, t=35, b=5), paper_bgcolor="rgba(0,0,0,0)")
+    fig.update_layout(
+        height=190,
+        margin=dict(l=15, r=15, t=35, b=5),
+        paper_bgcolor="rgba(0,0,0,0)",
+        font=dict(color="#0F172A"),
+    )
     st.plotly_chart(fig, use_container_width=True)
 
 
@@ -67,6 +72,7 @@ def _init_voice_state() -> None:
         "last_ai_mode": "unknown",
         "last_fallback_reason": None,
         "processed_audio_hashes": set(),
+        "mic_counter": 0,
     }
     for k, v in defaults.items():
         if k not in st.session_state:
@@ -193,7 +199,8 @@ def render_voice_agent_page(health: dict) -> None:
 
         # Voice Recording Input (Native Streamlit Microphone Widget)
         st.markdown("#### Voice Input (Browser Microphone → Faster-Whisper)")
-        recorded_audio = st.audio_input("Record your voice message", key=f"mic_{st.session_state.active_session_id}")
+        mic_key = f"mic_{st.session_state.active_session_id}_{st.session_state.mic_counter}"
+        recorded_audio = st.audio_input("Record your voice message", key=mic_key)
         if recorded_audio is not None:
             raw_bytes = recorded_audio.getvalue()
             audio_hash = hash(raw_bytes)
@@ -209,8 +216,10 @@ def render_voice_agent_page(health: dict) -> None:
                         )
                         transcript_text = resp["transcription"]["text"]
                         _handle_turn_response(resp, transcript_text)
+                        st.session_state.mic_counter += 1
                         st.rerun()
                     except Exception as exc:
+                        st.session_state.mic_counter += 1
                         st.error(f"Voice processing failed: {exc}. You can use text chat fallback below.")
 
         # Text Chat Fallback + Quick Test Prompts
@@ -289,9 +298,15 @@ def render_voice_agent_page(health: dict) -> None:
                     marker=dict(size=9),
                 )
             )
-            fig.update_yaxes(tickvals=[-1, 0, 1], ticktext=["Negative", "Neutral", "Positive"], range=[-1.3, 1.3])
-            fig.update_xaxes(title="Turn", dtick=1)
-            fig.update_layout(height=165, margin=dict(l=10, r=10, t=10, b=25), paper_bgcolor="rgba(0,0,0,0)")
+            fig.update_yaxes(tickvals=[-1, 0, 1], ticktext=["Negative", "Neutral", "Positive"], range=[-1.3, 1.3], color="#0F172A")
+            fig.update_xaxes(title="Turn", dtick=1, color="#0F172A")
+            fig.update_layout(
+                height=165,
+                margin=dict(l=10, r=10, t=10, b=25),
+                paper_bgcolor="rgba(0,0,0,0)",
+                plot_bgcolor="#FFFFFF",
+                font=dict(color="#0F172A"),
+            )
             st.plotly_chart(fig, use_container_width=True)
 
         with st.expander("Agent Tool Execution & RAG Citations", expanded=False):

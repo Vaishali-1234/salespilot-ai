@@ -462,7 +462,9 @@ class SalesPilotAgent:
         if rag_res.get("results"):
             top = rag_res["results"][0]
             sources = ", ".join(rag_res["sources"])
-            snippet = top["content"].replace("\n", " ").strip()
+            snippet = " ".join(
+                line.lstrip("#").strip() for line in top["content"].splitlines() if line.strip()
+            )
             if len(snippet) > 360:
                 snippet = snippet[:357].rsplit(" ", 1)[0] + "..."
             follow_up = ""

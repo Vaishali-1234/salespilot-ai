@@ -1,15 +1,79 @@
 """Speech-to-Text (STT) engine using Faster-Whisper with transparent status reporting."""
 
+import io
 import logging
 import os
 from pathlib import Path
 import tempfile
 import time
 from typing import Any, Dict, Optional
+import wave
+
+import numpy as np
 
 from backend.config import settings
 
 logger = logging.getLogger(__name__)
+
+
+def _decode_audio_to_16k_mono(audio_bytes: bytes, filename: str = "recording.wav") -> np.ndarray:
+    """Decode WAV or container audio into a 16kHz mono float32 numpy array without PyAV metadata_errors."""
+    # Fast path: standard PCM WAV (what st.audio_input records in browsers)
+    try:
+        with wave.open(io.BytesIO(audio_bytes), "rb") as wf:
+            n_channels = wf.getnchannels()
+            sampwidth = wf.getsampwidth()
+            framerate = wf.getframerate()
+            raw_frames = wf.readframes(wf.getnframes())
+
+        if sampwidth == 2:
+            samples = np.frombuffer(raw_frames, dtype=np.int16).astype(np.float32) / 32768.0
+        elif sampwidth == 4:
+            samples = np.frombuffer(raw_frames, dtype=np.int32).astype(np.float32) / 2147483648.0
+        elif sampwidth == 1:
+            samples = (np.frombuffer(raw_frames, dtype=np.uint8).astype(np.float32) - 128.0) / 128.0
+        else:
+            raise ValueError(f"Unsupported WAV sample width: {sampwidth}")
+
+        if n_channels > 1:
+            samples = samples.reshape(-1, n_channels).mean(axis=1)
+
+        if framerate != 16000 and len(samples) > 0:
+            target_len = int(round(len(samples) * 16000 / framerate))
+            x_old = np.linspace(0.0, 1.0, num=len(samples), endpoint=False)
+            x_new = np.linspace(0.0, 1.0, num=target_len, endpoint=False)
+            samples = np.interp(x_new, x_old, samples).astype(np.float32)
+
+        return np.ascontiguousarray(samples, dtype=np.float32)
+    except wave.Error:
+        pass
+
+    # Fallback path: decode WebM/MP3/OGG via PyAV without deprecated metadata_errors kwarg
+    import av
+
+    suffix = Path(filename).suffix or ".wav"
+    tmp_path = None
+    try:
+        with tempfile.NamedTemporaryFile(delete=False, suffix=suffix) as tmp:
+            tmp.write(audio_bytes)
+            tmp_path = tmp.name
+
+        resampler = av.audio.resampler.AudioResampler(format="s16", layout="mono", rate=16000)
+        chunks = []
+        with av.open(tmp_path, mode="r") as container:
+            for frame in container.decode(audio=0):
+                for resampled in resampler.resample(frame):
+                    arr = resampled.to_ndarray().reshape(-1).astype(np.float32) / 32768.0
+                    chunks.append(arr)
+        if not chunks:
+            return np.zeros(0, dtype=np.float32)
+        return np.ascontiguousarray(np.concatenate(chunks), dtype=np.float32)
+    finally:
+        if tmp_path and os.path.exists(tmp_path):
+            try:
+                os.remove(tmp_path)
+            except OSError:
+                pass
 
 
 class SpeechToTextEngine:
@@ -92,16 +156,22 @@ class SpeechToTextEngine:
                 ),
             }
 
-        suffix = Path(filename).suffix or ".wav"
-        tmp_path = None
         t0 = time.perf_counter()
         try:
-            with tempfile.NamedTemporaryFile(delete=False, suffix=suffix) as tmp:
-                tmp.write(audio_bytes)
-                tmp_path = tmp.name
+            audio_array = _decode_audio_to_16k_mono(audio_bytes, filename=filename)
+            if len(audio_array) == 0:
+                return {
+                    "success": False,
+                    "mode": "empty_audio",
+                    "text": "",
+                    "language": None,
+                    "duration_sec": 0.0,
+                    "latency_ms": round((time.perf_counter() - t0) * 1000, 1),
+                    "error": "Decoded audio is empty.",
+                }
 
             segments, info = self._model.transcribe(
-                tmp_path,
+                audio_array,
                 language=language,
                 beam_size=5,
                 vad_filter=True,
@@ -140,12 +210,6 @@ class SpeechToTextEngine:
                 "latency_ms": round((time.perf_counter() - t0) * 1000, 1),
                 "error": f"Transcription error: {exc}",
             }
-        finally:
-            if tmp_path and os.path.exists(tmp_path):
-                try:
-                    os.remove(tmp_path)
-                except OSError:
-                    pass
 
 
 stt_engine = SpeechToTextEngine()

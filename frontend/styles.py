@@ -18,6 +18,42 @@ def inject_custom_css() -> None:
             background-color: #F8FAFC;
             color: #0F172A;
         }
+        .stApp [data-testid="stMainBlockContainer"] p,
+        .stApp [data-testid="stMainBlockContainer"] li,
+        .stApp [data-testid="stMainBlockContainer"] label,
+        .stApp [data-testid="stMainBlockContainer"] [data-testid="stWidgetLabel"] p,
+        .stApp [data-testid="stMainBlockContainer"] [data-testid="stMarkdownContainer"] {
+            color: #0F172A;
+        }
+        .stApp [data-testid="stMainBlockContainer"] [data-testid="stCaptionContainer"] p {
+            color: #475569 !important;
+        }
+        .stApp [data-testid="stMainBlockContainer"] [data-testid="stChatMessage"] {
+            background-color: #FFFFFF;
+            border: 1px solid #E2E8F0;
+            border-radius: 12px;
+            padding: 0.75rem 1rem;
+            margin-bottom: 0.5rem;
+            color: #0F172A !important;
+        }
+        .stApp [data-testid="stMainBlockContainer"] [data-testid="stChatMessage"] p,
+        .stApp [data-testid="stMainBlockContainer"] [data-testid="stChatMessage"] span {
+            color: #0F172A !important;
+        }
+        .stApp [data-testid="stMainBlockContainer"] .stButton > button[kind="secondary"] {
+            background-color: #FFFFFF !important;
+            color: #0F172A !important;
+            border: 1px solid #CBD5E1 !important;
+        }
+        .stApp [data-testid="stMainBlockContainer"] .stButton > button[kind="secondary"]:hover {
+            border-color: #2563EB !important;
+            color: #1D4ED8 !important;
+        }
+        .stApp [data-testid="stMainBlockContainer"] .stButton > button[kind="primary"] {
+            background-color: #2563EB !important;
+            color: #FFFFFF !important;
+            border: none !important;
+        }
 
         [data-testid="stSidebar"] {
             background: linear-gradient(180deg, #0A1124 0%, #0F172A 100%);
