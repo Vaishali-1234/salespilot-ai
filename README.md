@@ -106,12 +106,6 @@ pip install -r requirements.txt
 ```cmd
 copy .env.example .env
 ```
-Open `.env` and add your Google Gemini API key (get one from [Google AI Studio](https://aistudio.google.com/app/apikey)):
-```ini
-GEMINI_API_KEY=your_actual_gemini_api_key_here
-GEMINI_MODEL=gemini-2.5-flash
-```
-> **Note:** If `GEMINI_API_KEY` is left blank, SalesPilot AI runs cleanly in **Demo Fallback Mode** and displays a clear warning banner in the UI.
 
 ### 4. Launch the Application
 **Option A — One-Click Launcher:**
